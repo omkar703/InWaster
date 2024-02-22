@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inwaster</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+  <script src="html5-qrcode.min.js"></script>
+
+  <!-- Favicons -->
+  <!-- <link rel="apple-touch-icon" sizes="180x180" href="./assets/images/favicons/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicons/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicons/favicon-16x16.png" />
+  <link rel="manifest" href="./assets/images/favicons/site.webmanifest" />
+  <link rel="mask-icon" href="./assets/images/favicons/safari-pinned-tab.svg" color="#5bbad5" />
+  <meta name="msapplication-TileColor" content="#da532c" />
+  <meta name="theme-color" content="#ffffff" /> -->
+
+  <!-- Vendor CSS Files -->
+  <link href="./assets/vendor/animate.css/animate.min.css" rel="stylesheet" />
+  <link href="./assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="./assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
+
+  <!-- Main CSS File -->
+  <link href="./assets/css/style.min.css" rel="stylesheet" />
+
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+  <style>
+    #sidebar {
+      height: 100%;
+      width: 250px;
+      position: fixed;
+      background-color: #f8f9fa;
+      padding-top: 15px;
+      border-right: 1px solid #dee2e6;
+    }
+
+    #content {
+      margin-left: 250px;
+      padding: 15px;
+      width: calc(100vw - 300px);
+    }
+
+    #responseMessage {
+      width: fit-content;
+      position: fixed;
+      top: 50%;
+      padding: 20px;
+      background-color: #30a70880;
+      border-radius: 7px;
+      margin: auto;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      z-index: 9999;
+    }
+
+    #overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #5d5b5bcf;
+      z-index: 2;
+    }
+
+    .mobile-nav {
+      display: none;
+    }
+
+    @media (max-width: 767px) {
+      #sidebar {
+        display: none;
+      }
+
+      #content {
+        margin-left: 0;
+        width: 100%;
+      }
+
+      .mobile-nav {
+        display: block;
+        text-align: center;
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body id="home">
+  <!-- ======= Pre-Loader ======= -->
+  <!-- <div id="preloader">
+    <div class="svg-container">
+      <svg width="305" height="56" viewBox="0 0 305 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path id="c"
+          d="M0.309998 35.61C0.309998 31.5967 1.12666 28.0967 2.76 25.11C4.39333 22.0767 6.65666 19.7433 9.55 18.11C12.4433 16.43 15.7567 15.59 19.49 15.59C24.2967 15.59 28.2633 16.8033 31.39 19.23C34.5633 21.61 36.6867 24.97 37.76 29.31H27.19C26.63 27.63 25.6733 26.3233 24.32 25.39C23.0133 24.41 21.38 23.92 19.42 23.92C16.62 23.92 14.4033 24.9467 12.77 27C11.1367 29.0067 10.32 31.8767 10.32 35.61C10.32 39.2967 11.1367 42.1667 12.77 44.22C14.4033 46.2267 16.62 47.23 19.42 47.23C23.3867 47.23 25.9767 45.4567 27.19 41.91H37.76C36.6867 46.11 34.5633 49.4467 31.39 51.92C28.2167 54.3933 24.25 55.63 19.49 55.63C15.7567 55.63 12.4433 54.8133 9.55 53.18C6.65666 51.5 4.39333 49.1667 2.76 46.18C1.12666 43.1467 0.309998 39.6233 0.309998 35.61Z" />
+        <g id="r-a-f">
+          <path id="r"
+            d="M54.7394 22.24C55.9994 20.1867 57.6327 18.5767 59.6394 17.41C61.6927 16.2433 64.026 15.66 66.6394 15.66V25.95H64.0494C60.9694 25.95 58.636 26.6733 57.0494 28.12C55.5094 29.5667 54.7394 32.0867 54.7394 35.68V55H44.9394V16.22H54.7394V22.24Z" />
+          <path id="a"
+            d="M70.7202 35.47C70.7202 31.55 71.4902 28.0733 73.0302 25.04C74.6168 22.0067 76.7402 19.6733 79.4002 18.04C82.1068 16.4067 85.1168 15.59 88.4302 15.59C91.3235 15.59 93.8435 16.1733 95.9902 17.34C98.1835 18.5067 99.9335 19.9767 101.24 21.75V16.22H111.11V55H101.24V49.33C99.9802 51.15 98.2302 52.6667 95.9902 53.88C93.7968 55.0467 91.2535 55.63 88.3602 55.63C85.0935 55.63 82.1068 54.79 79.4002 53.11C76.7402 51.43 74.6168 49.0733 73.0302 46.04C71.4902 42.96 70.7202 39.4367 70.7202 35.47ZM101.24 35.61C101.24 33.23 100.773 31.2 99.8402 29.52C98.9068 27.7933 97.6468 26.4867 96.0602 25.6C94.4735 24.6667 92.7702 24.2 90.9502 24.2C89.1302 24.2 87.4502 24.6433 85.9102 25.53C84.3702 26.4167 83.1102 27.7233 82.1302 29.45C81.1968 31.13 80.7302 33.1367 80.7302 35.47C80.7302 37.8033 81.1968 39.8567 82.1302 41.63C83.1102 43.3567 84.3702 44.6867 85.9102 45.62C87.4968 46.5533 89.1768 47.02 90.9502 47.02C92.7702 47.02 94.4735 46.5767 96.0602 45.69C97.6468 44.7567 98.9068 43.45 99.8402 41.77C100.773 40.0433 101.24 37.99 101.24 35.61Z" />
+          <path id="f"
+            d="M138.462 24.27H131.672V55H121.732V24.27H117.322V16.22H121.732V14.26C121.732 9.5 123.085 6 125.792 3.76C128.498 1.52 132.582 0.469998 138.042 0.609999V8.87C135.662 8.82333 134.005 9.22 133.072 10.06C132.138 10.9 131.672 12.4167 131.672 14.61V16.22H138.462V24.27Z" />
+        </g>
+
+        <path id="t"
+          d="M156.222 24.27V43.03C156.222 44.3367 156.526 45.2933 157.132 45.9C157.786 46.46 158.859 46.74 160.352 46.74H164.902V55H158.742C150.482 55 146.352 50.9867 146.352 42.96V24.27H141.732V16.22H146.352V6.63H156.222V16.22H164.902V24.27H156.222Z" />
+        <g id="s-o-l">
+          <path id="s-one"
+            d="M186.791 55.63C183.618 55.63 180.771 55.07 178.251 53.95C175.731 52.7833 173.724 51.22 172.231 49.26C170.784 47.3 169.991 45.13 169.851 42.75H179.721C179.908 44.2433 180.631 45.48 181.891 46.46C183.198 47.44 184.808 47.93 186.721 47.93C188.588 47.93 190.034 47.5567 191.061 46.81C192.134 46.0633 192.671 45.1067 192.671 43.94C192.671 42.68 192.018 41.7467 190.711 41.14C189.451 40.4867 187.421 39.7867 184.621 39.04C181.728 38.34 179.348 37.6167 177.481 36.87C175.661 36.1233 174.074 34.98 172.721 33.44C171.414 31.9 170.761 29.8233 170.761 27.21C170.761 25.0633 171.368 23.1033 172.581 21.33C173.841 19.5567 175.614 18.1567 177.901 17.13C180.234 16.1033 182.964 15.59 186.091 15.59C190.711 15.59 194.398 16.7567 197.151 19.09C199.904 21.3767 201.421 24.48 201.701 28.4H192.321C192.181 26.86 191.528 25.6467 190.361 24.76C189.241 23.8267 187.724 23.36 185.811 23.36C184.038 23.36 182.661 23.6867 181.681 24.34C180.748 24.9933 180.281 25.9033 180.281 27.07C180.281 28.3767 180.934 29.38 182.241 30.08C183.548 30.7333 185.578 31.41 188.331 32.11C191.131 32.81 193.441 33.5333 195.261 34.28C197.081 35.0267 198.644 36.1933 199.951 37.78C201.304 39.32 202.004 41.3733 202.051 43.94C202.051 46.18 201.421 48.1867 200.161 49.96C198.948 51.7333 197.174 53.1333 194.841 54.16C192.554 55.14 189.871 55.63 186.791 55.63Z" />
+          <path id="o"
+            d="M227.316 55.63C223.582 55.63 220.222 54.8133 217.236 53.18C214.249 51.5 211.892 49.1433 210.166 46.11C208.486 43.0767 207.646 39.5767 207.646 35.61C207.646 31.6433 208.509 28.1433 210.236 25.11C212.009 22.0767 214.412 19.7433 217.446 18.11C220.479 16.43 223.862 15.59 227.596 15.59C231.329 15.59 234.712 16.43 237.746 18.11C240.779 19.7433 243.159 22.0767 244.886 25.11C246.659 28.1433 247.546 31.6433 247.546 35.61C247.546 39.5767 246.636 43.0767 244.816 46.11C243.042 49.1433 240.616 51.5 237.536 53.18C234.502 54.8133 231.096 55.63 227.316 55.63ZM227.316 47.09C229.089 47.09 230.746 46.67 232.286 45.83C233.872 44.9433 235.132 43.6367 236.066 41.91C236.999 40.1833 237.466 38.0833 237.466 35.61C237.466 31.9233 236.486 29.1 234.526 27.14C232.612 25.1333 230.256 24.13 227.456 24.13C224.656 24.13 222.299 25.1333 220.386 27.14C218.519 29.1 217.586 31.9233 217.586 35.61C217.586 39.2967 218.496 42.1433 220.316 44.15C222.182 46.11 224.516 47.09 227.316 47.09Z" />
+          <path id="l" d="M264.534 3.2V55H254.734V3.2H264.534Z" />
+        </g>
+
+        <path id="s"
+          d="M289.057 55.63C285.883 55.63 283.037 55.07 280.517 53.95C277.997 52.7833 275.99 51.22 274.497 49.26C273.05 47.3 272.257 45.13 272.117 42.75H281.987C282.173 44.2433 282.897 45.48 284.157 46.46C285.463 47.44 287.073 47.93 288.987 47.93C290.853 47.93 292.3 47.5567 293.327 46.81C294.4 46.0633 294.937 45.1067 294.937 43.94C294.937 42.68 294.283 41.7467 292.977 41.14C291.717 40.4867 289.687 39.7867 286.887 39.04C283.993 38.34 281.613 37.6167 279.747 36.87C277.927 36.1233 276.34 34.98 274.987 33.44C273.68 31.9 273.027 29.8233 273.027 27.21C273.027 25.0633 273.633 23.1033 274.847 21.33C276.107 19.5567 277.88 18.1567 280.167 17.13C282.5 16.1033 285.23 15.59 288.357 15.59C292.977 15.59 296.663 16.7567 299.417 19.09C302.17 21.3767 303.687 24.48 303.967 28.4H294.587C294.447 26.86 293.793 25.6467 292.627 24.76C291.507 23.8267 289.99 23.36 288.077 23.36C286.303 23.36 284.927 23.6867 283.947 24.34C283.013 24.9933 282.547 25.9033 282.547 27.07C282.547 28.3767 283.2 29.38 284.507 30.08C285.813 30.7333 287.843 31.41 290.597 32.11C293.397 32.81 295.707 33.5333 297.527 34.28C299.347 35.0267 300.91 36.1933 302.217 37.78C303.57 39.32 304.27 41.3733 304.317 43.94C304.317 46.18 303.687 48.1867 302.427 49.96C301.213 51.7333 299.44 53.1333 297.107 54.16C294.82 55.14 292.137 55.63 289.057 55.63Z" />
+      </svg>
+    </div>
+  </div> -->
+  <!-- End #preloader -->
+
+  <!-- ======= Mobile nav toggle button ======= -->
+  <i class="fal fa-bars mobile-nav-toggle d-lg-none"></i>
+  <!-- ======= Header ======= -->
+  <header id="header" class="">
+    <div class="position-relative h-100 d-flex flex-column overflow-auto">
+      <nav id="navbar" class="navbar nav-menu">
+        <ul>
+          <li>
+            <a href="#home" class="nav-link scrollto active"><i class="fal fa-home"></i> <span>Home</span></a>
+          </li>
+          <li>
+            <a href="#services" class="nav-link scrollto"><i class="fal fa-user-cog"></i> <span>Services</span></a>
+          </li>
+          <li>
+            <a href="#team_0" class="nav-link scrollto"><i class="fal fa-user-friends"></i> <span>Team</span></a>
+          </li>
+          <li>
+            <a href="#about" class="nav-link scrollto"><i class="fal fa-info-circle"></i><span>About</span></a>
+          </li>
+          <li>
+            <a href="#footer" class="nav-link scrollto"><i class="fal fa-address-book"></i>
+              <span>Contact-Us</span></a>
+          </li>
+          <li>
+            <a href="#reader" class="nav-link scrollto"><i class="fal fa-box-open"></i>
+              <span>Scan</span></a>
+          </li>
+
+
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <!-- End Header -->
+
+  <div id="logo-header" class="d-flex align-items-center">
+    <!-- Logo -->
+    <div class="logo">
+      <h3 class="">
+        <a href="#home" class="d-flex align-items-center gap-2">
+          <span>Waste Management</span>
+        </a>
+      </h3>
+    </div>
+    <!-- End logo -->
+  </div>
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero">
+    <div class="content-container">
+      <div class="hero-container">
+        <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000"
+          data-bs-pause="false">
+          <ol class="carousel-indicators" id="hero-carousel-indicators"></ol>
+          <div class="carousel-inner" role="listbox">
+            <!-- Slide 1 -->
+            <div class="carousel-item active">
+              <div class="carousel-container">
+                <div class="carousel-left">
+                  <div class="carousel-content;">
+                    <br>
+                    <h2 class="animate__animated animate__fadeInDown" ;>
+
+                      InWaster
+                      <div class="list-group text-center">
+                        <hr>
+                        <h3 style="font-style: italic; color: lightskyblue;">Welcome</h3>
+                        {{ mail }}
+
+                      </div>
+                      <div class="list-group text-center mt-4">
+                        <h4 style="font-style: italic; color: lightskyblue;">Current Score: </h4>
+                        {{ score }}
+                        <hr>
+                      </div>
+
+                    </h2>
+
+
+
+                    <p class="animate__animated animate__fadeInUp">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi non ducimus error molestias quis
+                      voluptatem quos quod? Natus assumenda at modi laudantium necessitatibus ad. Quaerat pariatur qui
+                      quasi iure! Excepturi amet expedita libero ratione iure?
+                    </p>
+                    <a href="./services/digital-transformation.html" class="
+                          btn-read-more
+                          animate__animated animate__fadeInUp
+                          scrollto
+                        ">Read More</a>
+                  </div>
+                </div>
+                <div class="carousel-right">
+                  <img src="./assets/images/services/1-scaled.jpg" alt="background" />
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End Hero -->
+
+  <!-- ======= Services Section ======= -->
+  <section id="services" class="services section-bg">
+    <div class="content-container">
+      <div class="container">
+        <div class="section-title">
+          <h2>Services</h2>
+        </div>
+
+        <div class="row">
+          <div class="col-xl-3 col-md-6 d-flex align-items-stretch">
+            <div class="box-card">
+              <div class="
+                    section-header
+                    d-flex
+                    align-items-center
+                    justify-content-start
+                    gap-3
+                  ">
+                <div class="icon">
+                  <i class="fal fa-random fa-3x"></i>
+                </div>
+                <h4>Dustbin OverFlow </h4>
+              </div>
+
+              <p>
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore sed perspiciatis nam amet officiis
+                doloremque dolore quas dignissimos quo repellendus?
+              </p>
+
+              <!-- <a href="./services/digital-transformation.html">Read More</a> -->
+            </div>
+          </div>
+
+          <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
+            <div class="box-card">
+              <div class="
+                    section-header
+                    d-flex
+                    align-items-center
+                    justify-content-start
+                    gap-3
+                  ">
+                <div class="icon">
+                  <i class="fal fa-briefcase fa-3x"></i>
+                </div>
+                <h4>Business</h4>
+              </div>
+
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste at sed libero exercitationem modi
+                voluptate nobis quo iusto consequuntur eum!
+              </p>
+
+              <!-- <a href="./services/bpo.html">Read More</a> -->
+            </div>
+          </div>
+
+          <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-xl-0">
+            <div class="box-card">
+              <div class="
+                    section-header
+                    d-flex
+                    align-items-center
+                    justify-content-start
+                    gap-3
+                  ">
+                <div class="icon">
+                  <i class="fal fa-usd-circle fa-3x"></i>
+                </div>
+                <h4>Credit System</h4>
+              </div>
+
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati rem fugit ea voluptatum architecto
+                autem at temporibus aperiam ad praesentium.
+              </p>
+
+              <!-- <a class="" href="./services/finance.html">Read More</a> -->
+            </div>
+          </div>
+
+          <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-xl-0">
+            <div class="box-card">
+              <div class="
+                    section-header
+                    d-flex
+                    align-items-center
+                    justify-content-start
+                    gap-3
+                  ">
+                <div class="icon">
+                  <i class="fal fa-laptop fa-3x"></i>
+                </div>
+                <h4>24*7</h4>
+              </div>
+
+              <p>
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa aut, sit, excepturi numquam voluptate
+                est vitae ipsam reprehenderit nulla blanditiis modi magnam illo voluptates asperiores? Eligendi ea vel
+                ut rerum?
+              </p>
+
+              <!-- <a href="./services/software.html">Read More</a> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End Services Section -->
+
+  <!-- ======= Produsts Section ======= -->
+  <!-- <section id="products" class="products">
+    <div class="content-container">
+      <div class="container">
+        <div class="section-title">
+          <h2>Products</h2>
+        </div>
+
+        <div class="product-cards row gap-3 justify-content-center">
+          <div class="
+                col-xl-6
+                d-flex
+                flex-column flex-sm-row
+                align-items-stretch
+                row
+              ">
+            <div class="
+                  img-container
+                  col-sm-5
+                  position-relative
+                  d-flex
+                  align-items-center
+                  justify-content-center
+                  overflow-hidden
+                ">
+              <img class="position-absolute" src="./assets/images/products/Software-development.jpg" alt="" />
+            </div>
+            <div class="col-sm-7 box-card position-relative">
+              <div class="section-header d-flex align-items-center gap-3">
+                <div class="icon"><i class="fal fa-laptop-code"></i></div>
+                <h4>Software Development</h4>
+              </div>
+
+              <p>
+                Craftsols is a global provider of global IT and Enterprise
+                applications and software solutions. Our core focus is on
+                Custom Development, systems integration and technical
+                services.
+              </p>
+              <a class="" href="./products/software-dev.html">See Details</a>
+            </div>
+          </div>
+
+          <div class="
+                col-xl-6
+                d-flex
+                flex-column flex-sm-row
+                align-items-stretch
+                row
+              ">
+            <div class="
+                  img-container
+                  col-sm-5
+                  position-relative
+                  d-flex
+                  align-items-center
+                  justify-content-center
+                  overflow-hidden
+                ">
+              <img class="position-absolute" src="./assets/images/products/erp.jpg" alt="" />
+            </div>
+            <div class="col-sm-7 box-card position-relative">
+              <div class="section-header d-flex align-items-center gap-3">
+                <div class="icon"><i class="fal fa-chart-network"></i></div>
+                <h4>Enterprise Resource Planning</h4>
+              </div>
+
+              <p>
+                You can register and start using or distributing
+                figs.software, the best and friendliest option in Enterprise
+                Resource Management (ERP) applications.
+              </p>
+
+              <a href="./products/erd.html">See Details</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section> -->
+  <!-- End Products Section -->
+
+  <div class="section-title">
+    <h2>Team</h2>
+  </div>
+  <section id="team_0" class="team-section section-bg">
+    <div class="content-container">
+      <div class="container">
+        <article class="d-flex align-items-center justify-content-center">
+          <div class="row align-items-center">
+            <div class="col-lg-6 d-flex align-items-center justify-content-start">
+
+              <img src="" alt="Debjit-ray" />
+            </div>
+
+            <div class="info-box col-lg-6 bg-light p-4">
+              <div class="name"><span></span> Debjit ray</div>
+              <div class="designation">Founder</div>
+              <div class="details">
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, placeat. Nemo dolorem, temporibus
+                  eos ea soluta mollitia, nulla animi consectetur repudiandae enim placeat dicta quisquam quibusdam
+                  beatae deserunt id possimus.
+                </p>
+
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <br />
+        <hr />
+        <br />
+
+        <article class="d-flex align-items-center justify-content-center">
+          <div class="row flex-column-reverse flex-lg-row align-items-center">
+            <div class="info-box col-lg-6 bg-light p-4">
+              <div class="name"><span></span>Ritik Dalal</div>
+              <div class="designation">Co-Founder</div>
+              <div class="details">
+                <p>
+                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Harum quos mollitia aut. Totam, adipisci?
+                  Dolor error assumenda, ea itaque facilis ratione laborum, sunt officia reprehenderit provident, iste
+                  aut tenetur sint!
+                </p>
+              </div>
+            </div>
+
+            <div class="col-lg-6 d-flex align-items-center justify-content-end">
+              <img src="" alt="Ritik dalal" />
+            </div>
+          </div>
+        </article>
+
+        <br />
+        <hr />
+        <br />
+
+        <article class="d-flex align-items-center justify-content-center">
+          <div class="row align-items-center">
+            <div class="col-lg-6 d-flex align-items-center justify-content-start">
+              <img src="" alt="Deepika Gupta" />
+            </div>
+
+            <div class="info-box col-lg-6 bg-light p-4">
+              <div class="name"><span></span> Deepika Gupta</div>
+              <div class="designation">Co-Founder</div>
+              <div class="details">
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque odit dolorem deserunt autem, vel esse,
+                  consequuntur vero dolor ab facere reprehenderit ipsa velit repellendus quae qui nostrum rem quos
+                  asperiores.
+                </p>
+
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <br />
+        <hr />
+        <br />
+
+        <article class="d-flex align-items-center justify-content-center">
+          <div class="row flex-column-reverse flex-lg-row align-items-center">
+            <div class="info-box col-lg-6 bg-light p-4">
+              <div class="name"><span></span> Omkar Ajitkumar Phadatare</div>
+              <div class="designation">Co-Founder</div>
+              <div class="details">
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel autem nobis eaque incidunt consequatur
+                  repellendus fuga ipsam voluptas molestias? Aliquam laborum vitae itaque praesentium. Atque
+                  necessitatibus fugiat nostrum voluptates quasi?
+                </p>
+              </div>
+            </div>
+
+            <div class="col-lg-6 d-flex align-items-center justify-content-end">
+              <img src="" alt="Omkar" />
+            </div>
+          </div>
+        </article>
+
+        <br />
+        <hr />
+        <br />
+
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======= About Us Section ======= -->
+  <section id="about" class="about section-bg">
+    <div class="content-container">
+      <div class="container">
+        <div class="section-title">
+          <h2>About Us</h2>
+        </div>
+
+        <div class="
+              content
+              d-flex
+              flex-column-reverse flex-lg-row-reverse
+              align-items-center
+              justify-content-center
+              gap-lg-5 gap-4
+              p-3
+            ">
+          <div class="col-lg-5">
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque quibusdam, voluptatem quod aliquam sunt
+              officia ipsam molestias ducimus qui optio minus alias amet nihil voluptate ex. At molestias harum facere.
+            </p>
+
+            <!-- <a href="./about.html">Learn more</a> -->
+          </div>
+          <div class="col-lg-5">
+            <div>
+              <img class="img-fluid" src="./assets/images/about.jpg" alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End About Us Section -->
+  <!-- 
+  Start Contact-us -->
+  <footer id="footer">
+    <div class="content-container">
+      <div class="footer-top">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-3 col-md-6 footer-contact">
+              <h3>Contact-Us</h3>
+              <h6><strong>India</strong></h6>
+              <p>
+                MP<br />
+                Vit - Bhopal<br />
+
+                <strong>Phone:</strong>^^^^^^^^^^^^^^^^^^<br />
+              </p>
+              <br />
+
+              <strong>Email:</strong> @@@@@@@@@@@@@@@@@@@@@@@@@<br />
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+
+
+  <div class="mobile-nav bg-light">
+    <h1 class="text-center">INWASTER</h1>
+    <h3>Welcome</h3>
+    {{ mail }}
+    <h4>Current Score: </h4>
+    {{ score }}
+  </div>
+
+  <div id="content">
+    <h2>Scan QR Code</h2>
+    <p>Scan the QR code to continue </p>
+    <div id="reader" style="height: 80vh; text-align: center; position: relative;"></div>
+    <div id="overlay" style="display: none;"></div>
+    <div id="responseMessage" style="display: none; cursor: pointer;" onclick="closeResponse()">
+
+      <p>Thank you for scanning !</p>
+      <br>
+      <p> Click to continue </p>
+
+    </div>
+  </div>
+  <script>
+    let responseReceived = false;
+    let scanningEnabled = true;
+
+    function onScanSuccess(decodedText, decodedResult) {
+      // Check if scanning is enabled
+      if (scanningEnabled) {
+        // Disable scanning until the response is received
+        scanningEnabled = false;
+
+        // handle the scanned code as you like, for example:
+        console.log(`Code matched = ${decodedText}`, decodedResult);
+
+        // Send the scanned QR code data to Flask backend
+        sendDataToServer(decodedText);
+      } else {
+        console.log("Scanning is disabled. Ignoring scan.");
+      }
+    }
+
+    function onScanFailure(error) {
+      console.warn(`Code scan error = ${error}`);
+    }
+    function sendDataToServer(data) {
+      const mail = "{{ mail }}";
+      fetch('/processQR', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ data: data, email: mail }),
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Response from server:', data);
+          showResponse(data.message);
+        })
+        .catch(error => {
+          console.error('Error sending data to server:', error);
+          // Re-enable scanning in case of an error
+          scanningEnabled = true;
+        });
+    }
+
+    function showResponse(message) {
+      // Display the response message
+      document.getElementById("responseMessage").style.display = "block";
+      document.getElementById("overlay").style.display = "block";
+      responseReceived = true;
+      console.log(message);
+    }
+
+    function closeResponse() {
+      // Close the response message and allow scanning again
+      document.getElementById("responseMessage").style.display = "none";
+      document.getElementById("overlay").style.display = "none";
+      responseReceived = false;
+
+      // Re-enable scanning
+      scanningEnabled = true;
+
+      console.log("Response message closed. Resuming scanning.");
+    }
+
+    let html5QrcodeScanner = new Html5QrcodeScanner(
+      "reader",
+      { fps: 24, qrbox: { width: 450, height: 450 } },
+        /* verbose= */ false);
+    html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+  </script>
+</body>
+
+</html>

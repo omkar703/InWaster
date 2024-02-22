@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INWASTER Admin</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Custom styling for the sidebar */
+        #sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            background-color: #f8f9fa;
+            padding-top: 15px;
+            border-right: 1px solid #dee2e6;
+        }
+
+        #content {
+            margin-left: 250px;
+            padding: 15px;
+        }
+        .tbl{
+            margin-top: 30px;
+            height: 70vh;
+            width: calc(95vw - 250px);
+        }
+    </style>
+</head>
+<body>
+
+<div class="d-flex" id="wrapper">
+    <!-- Sidebar -->
+    <div class="bg-light" id="sidebar">
+        <h1 class="text-center">INWASTER</h1>
+        <div class="list-group">
+            <a href="{{ url_for('admin') }}" class="list-group-item list-group-item-action">Home</a>
+        </div>
+        <div class="list-group">
+            <a href="{{ url_for('login') }}" class="list-group-item list-group-item-action">Logout</a>
+        </div>
+    </div>
+
+    <div id="content">
+        <h2>Hardware logs</h2>
+        <div class="tbl">
+            <table class="table">
+                <thead>
+                  <tr>
+                    {% for i in d_keys %}
+                    <th scope="col">{{ i }}</th>
+                    {% endfor %}
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for i in data %}
+                    <tr>
+                        {% for j in i %}
+                        <td>{{ i[j] }}</td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+              </table>
+        </div>
+    </div>
+
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
